@@ -1,10 +1,15 @@
 public class Iniciador {
     public static void main(String[] args) {
         int[][] tabela = {{1, 0, 0}, {1, 0, 1}, {1, 1, 0}, {1, 1, 1}};
+        int[][] tabela2 = {{0, 0, 0}, {0, 0, 1}, {0, 1, 0}, {0, 1, 1}};
         int[] amostra = {0, 0, 1, 1};
-
+        int[] resultados = {0, 0, 0, 0};
         Perceptron perceptron = new Perceptron(3); // 3 sensores
         perceptron.treinar(tabela, amostra);
+        resultados = perceptron.ativar(tabela2);
+        for (int resultado : resultados) {
+            System.out.println (resultado);
+        }
     }
 }
 
@@ -108,17 +113,29 @@ class Perceptron {
             aprendizagem.reset();
             for (int i = 0; i < entradas.length; i++) {
                 aprendizagem.setResultadoEsperado(amostras[i]);
-                for (int j = 0; j < sensores.length; j++) {
-                    sensores[j].receberSinal(entradas[i][j]);
-                }
-                int soma = Soma.somar(sensores);
-                int saida = Ativacao.gerarSaida(soma);
-                int regra = aprendizagem.conferirResposta(saida);
-
+                int regra = aprendizagem.conferirResposta(pensar(entradas, i));
                 ajustarPesos(regra);
             }
         }
     }
+
+    public int[] ativar(int[][] entradas) {
+        int[] saidas = new int[entradas.length];
+        for (int i = 0; i < entradas.length; i++) {
+            saidas[i] = pensar(entradas, i);
+        }
+        return saidas;
+    }
+
+    public int pensar(int[][] entradas, int i) {
+        for (int j = 0; j < sensores.length; j++) {
+            sensores[j].receberSinal(entradas[i][j]);
+        }
+        int soma = Soma.somar(sensores);
+        return Ativacao.gerarSaida(soma);
+    }
+
+
 
     private void ajustarPesos(int regra) {
         if (regra != 0) {
