@@ -1,5 +1,3 @@
-package atividade;
-
 public class Avo extends Pessoa {
     private String inss;
 

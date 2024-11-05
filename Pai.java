@@ -1,5 +1,3 @@
-package atividade;
-
 public class Pai extends Pessoa{
     private String ctps;
 

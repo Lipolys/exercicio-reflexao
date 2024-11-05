@@ -1,5 +1,3 @@
-package atividade;
-
 public class Filho extends Pessoa {
     private String reservista;
 

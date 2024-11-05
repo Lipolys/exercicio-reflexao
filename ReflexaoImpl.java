@@ -1,5 +1,3 @@
-package atividade;
-
 import javax.swing.*;
 
 public class ReflexaoImpl {
